@@ -74,13 +74,18 @@
     }
     .feature-card-front { background: #fff; }
     .feature-card-back {
-      background: var(--primary);
-      color: #fff;
+      background: #a0b4ff;
+      color: #000;
       transform: rotateY(180deg);
     }
 
     /* Dark mode  */
-    body.dark-mode .feature-card-back { background: #2c2c72; }
+    body.dark-mode .feature-card-back { 
+  background: #2c2c72; /* or keep #a0b4ff if you like */
+  color: #fff;         /* white text for readability */
+    }
+    
+    body.dark-mode .feature-card-back { background: #a0b4ff; }
     body.dark-mode .timeline::before { background: #8f94fb; }
     body.dark-mode .timeline-item::before { background: #ff6a3d; }
   </style>
@@ -159,7 +164,7 @@
   </div>
 
   <!-- Features with Flip Cards -->
-  <div id="about-features" class="container mt-5">
+  <div id="about-features" class="container mt-5 mb-5">
     <h2 class="text-center">Our Features</h2>
     <div class="row mt-4">
 
@@ -167,7 +172,7 @@
         <div class="feature-card h-100">
           <div class="feature-card-inner card shadow-sm p-3 text-center">
             <div class="feature-card-front">
-              <img src="Polls.png" class="card-img-top mx-auto" style="width:80px;">
+              <img src="Polls.png" class="card-img-top mx-auto" style="width:30px;">
               <h5 class="mt-3">Interactive Polls</h5>
             </div>
             <div class="feature-card-back">
@@ -181,7 +186,7 @@
         <div class="feature-card h-100">
           <div class="feature-card-inner card shadow-sm p-3 text-center">
             <div class="feature-card-front">
-              <img src="Sharing.png" class="card-img-top mx-auto" style="width:80px;">
+              <img src="Sharing.png" class="card-img-top mx-auto" style="width:30px;">
               <h5 class="mt-3">Meme Sharing</h5>
             </div>
             <div class="feature-card-back">
@@ -195,7 +200,7 @@
         <div class="feature-card h-100">
           <div class="feature-card-inner card shadow-sm p-3 text-center">
             <div class="feature-card-front">
-              <img src="Engage.png" class="card-img-top mx-auto" style="width:80px;">
+              <img src="Engage.png" class="card-img-top mx-auto" style="width:30px;">
               <h5 class="mt-3">Engaged Community</h5>
             </div>
             <div class="feature-card-back">
