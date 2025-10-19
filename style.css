@@ -1,0 +1,382 @@
+
+/* ROOT VARIABLES */
+:root {
+  --primary: #4e54c8;        /* gradient start */
+  --secondary: #8f94fb;      /* gradient end */
+  --accent: #ff6a3d;
+  --bg-light: #f5f5f5;
+  --bg-dark: #121212;
+  --text-light: #ffffff;
+  --text-dark: #222222;
+  --shadow: rgba(0,0,0,0.15);
+}
+
+/* 
+   RESET
+    */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  transition: background 0.4s, color 0.4s;
+}
+
+body.dark-mode {
+  background: var(--bg-dark);
+  color: var(--text-light);
+}
+
+/* ==========================
+   NAVBAR
+   ========================== */
+.navbar {
+  transition: background 0.4s, box-shadow 0.4s, backdrop-filter 0.4s;
+}
+.navbar.scrolled {
+  background: var(--primary);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  backdrop-filter: blur(5px);
+}
+
+/* 
+   SECTIONS
+    */
+section {
+  padding: 60px 20px;
+  transition: background 0.5s, color 0.5s;
+  scroll-margin-top: 70px;
+}
+
+section:nth-of-type(odd) {
+  background: linear-gradient(120deg, var(--primary), var(--secondary));
+  color: white;
+}
+
+section:nth-of-type(even) {
+  background: var(--bg-light);
+  color: var(--text-dark);
+}
+
+/* 
+   HEADINGS
+    */
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  text-align: center;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -100%;
+  width: 100%;
+  height: 4px;
+  background: var(--accent);
+  transition: left 0.5s;
+}
+h2:hover::after {
+  left: 0;
+}
+
+/* 
+   CARDS
+     */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #fff;
+  border-radius: 12px;
+}
+.card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 16px 30px var(--shadow);
+}
+
+/* 
+   BUTTONS
+    */
+.btn, .btn-cta {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-cta {
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  color: #fff;
+}
+.btn-cta:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+}
+
+/* 
+   MEME GALLERY
+    */
+#meme-gallery .col-md-4 {
+  transition: transform 0.4s, opacity 0.4s, filter 0.4s;
+}
+#meme-gallery .col-md-4:hover {
+  transform: scale(1.08);
+  filter: brightness(1.1);
+}
+
+/* 
+   FADE-IN ANIMATION
+   */
+.fade-in {
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-in.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* 
+   POLL PROGRESS BARS
+    */
+.progress {
+  height: 25px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.progress-bar {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 
+   FOOTER
+   */
+footer {
+  background: var(--primary);
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 0.9rem;
+  transition: background 0.4s, color 0.4s;
+}
+
+/* Glassmorphic Back-to-Top Button */
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15); /* semi-transparent */
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s ease;
+  z-index: 1000;
+}
+
+/* Visible when scrolling */
+#backToTop.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Subtle hover glow */
+#backToTop:hover {
+  transform: scale(1.08);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Dark mode variation */
+body.dark-mode #backToTop {
+  background: rgba(30, 30, 30, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fafafa;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode #backToTop:hover {
+  background: rgba(60, 60, 60, 0.45);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* 
+   LINKS
+    */
+a.nav-link {
+  position: relative;
+  transition: color 0.3s;
+}
+a.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -4px;
+  width: 0; height: 2px;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+a.nav-link:hover::after {
+  width: 100%;
+}
+
+/* 
+   DARK MODE OVERRIDES
+    */
+body.dark-mode {
+  background: var(--bg-dark);
+  color: var(--text-light);
+}
+
+body.dark-mode section:nth-of-type(even) {
+  background: #1e1e1e;
+  color: #f5f5f5;
+}
+
+body.dark-mode section:nth-of-type(odd) {
+  background: linear-gradient(120deg, #2c2c72, #6c6cff);
+  color: #fff;
+}
+
+/* Cards in dark mode */
+body.dark-mode .card {
+  background: #222;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+/* Buttons in dark mode */
+body.dark-mode .btn-cta {
+  color: #fff;
+}
+
+/* Progress bars in dark mode */
+body.dark-mode .progress-bar.bg-success {
+  background-color: #4caf50 !important;
+}
+body.dark-mode .progress-bar.bg-danger {
+  background-color: #f44336 !important;
+}
+
+/* Navbar in dark mode */
+body.dark-mode .navbar {
+  background: rgba(30, 30, 30, 0.9);
+}
+
+/* Footer in dark mode */
+body.dark-mode footer {
+  background: #2c2c72;
+  color: #fff;
+}
+
+/* CONTACT PAGE */
+.contact-section {
+  min-height: 100vh;
+  padding-top: 100px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.contact-img {
+  transition: transform 0.6s ease, filter 0.4s ease;
+}
+
+.contact-img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #ff6b6b, #feca57, #54a0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.form-floating input,
+.form-floating textarea {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+.form-floating label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.btn-primary {
+  background: var(--primary);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px var(--primary);
+}
+
+/* Dark mode tweaks */
+body.dark-mode .contact-section {
+  background: linear-gradient(135deg, #111, #222);
+}
+
+body.dark-mode .form-floating input,
+body.dark-mode .form-floating textarea {
+  background: rgba(255, 255, 255, 0.05);
+  color: #eee;
+}
+
+body.dark-mode .glass-card {
+  background: rgba(40, 40, 40, 0.5);
+}
+/*---------------------------------------------------------*/
+/* === SCROLL REVEAL ANIMATIONS === */
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.9s ease-out;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Optional subtle stagger animation */
+.reveal-delay {
+  transition-delay: 0.2s;
+}
+
+.reveal-delay-2 {
+  transition-delay: 0.4s;
+}
