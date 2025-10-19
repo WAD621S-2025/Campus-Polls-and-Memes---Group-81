@@ -123,7 +123,9 @@
     </div>
   </section>
 
-  <section id="home-polls" class="polls-section">
+ <section id="home-polls" class="polls-section">
+  <div id="polls-particles"></div>
+
   <h2 class="section-title">📊 Trending Campus Polls</h2>
 
   <div class="polls-container">
@@ -132,15 +134,6 @@
       <div class="options">
         <button data-option="Yes">Yes</button>
         <button data-option="No">No</button>
-      </div>
-      <div class="results"></div>
-    </div>
-
-    <div class="poll-card" data-question="Which café serves the best coffee on campus?">
-      <h3>Which café serves the best coffee on campus?</h3>
-      <div class="options">
-        <button data-option="Tech Café">Tech Café</button>
-        <button data-option="NUST Lounge">NUST Lounge</button>
       </div>
       <div class="results"></div>
     </div>
@@ -172,220 +165,262 @@
   <div class="poll-origin">
     <h3>The Power of Polls 🧠</h3>
     <p>
-      Polls bring our campus together — they capture opinions, spark conversations, and give everyone a voice.
-      Whether you’re debating course times or cafeteria food, every vote matters!
-      Have your say or start your own poll to keep the campus buzzing.
+      Polls capture campus opinions, ignite debates, and give everyone a voice.
+      From cafeteria snacks to course schedules — every vote shapes our experience.
+      Join the discussion, or create your own poll to make your mark!
     </p>
   </div>
 
-  <!-- Floating particles -->
-  <div id="polls-particles"></div>
-
   <style>
-  /* === ROOT COLORS === */
-  :root {
-    --primary: #4e54c8;
-    --secondary: #8f94fb;
-    --accent: #ff6a3d;
-    --bg-light: #f5f5f5;
-    --bg-dark: #121212;
-    --text-light: #ffffff;
-    --text-dark: #222222;
-    --shadow: rgba(0,0,0,0.15);
-  }
+    :root {
+      --primary: #4e54c8;
+      --secondary: #8f94fb;
+      --accent: #ff6a3d;
+      --bg-dark: #121212;
+      --text-light: #ffffff;
+      --text-dark: #222222;
+      --shadow: rgba(0,0,0,0.2);
+    }
 
-  /* === POLLS SECTION === */
-  .polls-section {
-    text-align: center;
-    padding: 100px 20px;
-    position: relative;
-    color: var(--text-light);
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    overflow: hidden;
-  }
+    .polls-section {
+      position: relative;
+      overflow: hidden;
+      padding: 100px 20px;
+      text-align: center;
+      color: var(--text-light);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background-size: cover;
+      background-attachment: fixed;
+    }
 
-  .section-title {
-    font-size: 2.8rem;
-    font-weight: 800;
-    margin-bottom: 50px;
-    text-shadow: 2px 2px 15px rgba(0,0,0,0.3);
-  }
+    /* Particles */
+    #polls-particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 1;
+    }
 
-  .polls-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 35px;
-    justify-content: center;
-    margin-bottom: 60px;
-  }
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+      animation: floatParticles 12s linear infinite;
+      filter: blur(1px);
+    }
 
-  .poll-card {
-    background: var(--bg-light);
-    color: var(--text-dark);
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px var(--shadow);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
+    @keyframes floatParticles {
+      from {
+        transform: translateY(0);
+        opacity: 0.8;
+      }
+      to {
+        transform: translateY(-900px);
+        opacity: 0;
+      }
+    }
 
-  .poll-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-  }
+    /* Section Title */
+    .section-title {
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 60px;
+      text-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+      position: relative;
+      z-index: 2;
+      animation: shimmer 5s infinite alternate ease-in-out;
+    }
 
-  .poll-card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: var(--primary);
-  }
+    @keyframes shimmer {
+      0% { text-shadow: 0 0 5px var(--secondary), 0 0 15px var(--primary); }
+      100% { text-shadow: 0 0 15px var(--primary), 0 0 30px var(--secondary); }
+    }
 
-  .options {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 10px;
-  }
+    /* Poll cards */
+    .polls-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      justify-content: center;
+      margin-bottom: 60px;
+      position: relative;
+      z-index: 2;
+    }
 
-  .options button {
-    background: var(--accent);
-    border: none;
-    color: var(--text-light);
-    padding: 10px 22px;
-    border-radius: 25px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
+    .poll-card {
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text-dark);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px var(--shadow);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      transform: translateY(50px);
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
 
-  .options button:hover {
-    background: #ff845a;
-    transform: scale(1.07);
-  }
+    .poll-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-  .results {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--secondary);
-    margin-top: 8px;
-    display: none;
-  }
+    .poll-card h3 {
+      color: var(--primary);
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
 
-  /* === BUTTONS === */
-  .poll-actions {
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-    margin: 70px 0;
-  }
+    .options {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
 
-  .btn {
-    text-decoration: none;
-    color: var(--text-light);
-    background: var(--accent);
-    padding: 14px 28px;
-    border-radius: 35px;
-    font-weight: 600;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-    transition: 0.3s;
-  }
+    .options button {
+      background: var(--accent);
+      border: none;
+      color: var(--text-light);
+      padding: 10px 22px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-  .btn:hover {
-    transform: scale(1.08);
-    background: #ff845a;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-  }
+    .options button:hover {
+      background: #ff845a;
+      transform: scale(1.07);
+    }
 
-  /* === ORIGIN BOX === */
-  .poll-origin {
-    background: var(--bg-light);
-    color: var(--text-dark);
-    margin: 50px auto 0 auto;
-    padding: 50px;
-    border-radius: 20px;
-    box-shadow: 0 8px 25px var(--shadow);
-    max-width: 900px;
-    text-align: left;
-  }
+    .results {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--secondary);
+      margin-top: 8px;
+      display: none;
+    }
 
-  .poll-origin h3 {
-    color: var(--primary);
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-  }
+    /* Buttons */
+    .poll-actions {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin: 80px 0;
+      position: relative;
+      z-index: 2;
+    }
 
-  .poll-origin p {
-    font-size: 1rem;
-    line-height: 1.8;
-  }
+    .btn {
+      text-decoration: none;
+      color: var(--text-light);
+      background: var(--accent);
+      padding: 14px 28px;
+      border-radius: 35px;
+      font-weight: 600;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+      animation: slideIn 1s ease forwards, pulse 3s infinite ease-in-out alternate;
+      opacity: 0;
+    }
 
-  /* === FLOATING PARTICLES === */
-  #polls-particles {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    z-index: 0;
-  }
+    .btn.visible {
+      opacity: 1;
+    }
 
-  .particle {
-    position: absolute;
-    background: rgba(255,255,255,0.2);
-    border-radius: 50%;
-    animation: floatParticles 10s linear infinite;
-  }
+    @keyframes slideIn {
+      0% { transform: translateY(40px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
 
-  @keyframes floatParticles {
-    from { transform: translateY(0); opacity: 0.9; }
-    to { transform: translateY(-800px); opacity: 0; }
-  }
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 10px var(--accent); }
+      100% { transform: scale(1.05); box-shadow: 0 0 25px var(--accent); }
+    }
 
-  /* Ensure content above particles */
-  .polls-section > *:not(#polls-particles) {
-    position: relative;
-    z-index: 1;
-  }
+    /* Poll Origin Box */
+    .poll-origin {
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--text-dark);
+      margin: 50px auto 0 auto;
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px var(--shadow);
+      max-width: 900px;
+      text-align: left;
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      transform: translateY(60px);
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+
+    .poll-origin.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .poll-origin h3 {
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+
+    .poll-origin p {
+      font-size: 1rem;
+      line-height: 1.8;
+    }
   </style>
 
   <script>
-  // ===== INTERACTIVE POLL LOGIC =====
-  const polls = document.querySelectorAll('.poll-card');
+    // === Particle
+    const container = document.getElementById('polls-particles');
+    for (let i = 0; i < 25; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      const size = Math.random() * 10 + 5;
+      p.style.width = `${size}px`;
+      p.style.height = `${size}px`;
+      p.style.left = `${Math.random() * 100}%`;
+      p.style.bottom = `${Math.random() * 100}px`;
+      p.style.animationDuration = `${10 + Math.random() * 5}s`;
+      p.style.animationDelay = `${Math.random() * 5}s`;
+      container.appendChild(p);
+    }
 
-  polls.forEach(poll => {
-    const buttons = poll.querySelectorAll('button');
-    const results = poll.querySelector('.results');
-    let voted = false;
+    // === Poll Logic ===
+    document.querySelectorAll('.poll-card').forEach(card => {
+      const buttons = card.querySelectorAll('button');
+      const result = card.querySelector('.results');
+      let voted = false;
 
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (voted) return;
-        voted = true;
-        const option = btn.dataset.option;
-        results.style.display = 'block';
-        results.textContent = `You voted for "${option}" ✅`;
-        btn.style.background = '#4e54c8';
-        btn.style.transform = 'scale(1.05)';
-        setTimeout(() => {
-          results.textContent += ' — Thanks for your input!';
-        }, 1000);
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (voted) return;
+          voted = true;
+          result.textContent = `You voted for "${btn.dataset.option}" ✅`;
+          result.style.display = 'block';
+          btn.style.background = '#4e54c8';
+        });
       });
     });
-  });
 
-  // ===== PARTICLES GENERATOR =====
-  const particlesContainer = document.getElementById('polls-particles');
-  for (let i = 0; i < 25; i++) {
-    const p = document.createElement('div');
-    p.classList.add('particle');
-    const size = Math.random() * 12 + 5;
-    p.style.width = `${size}px`;
-    p.style.height = `${size}px`;
-    p.style.left = `${Math.random() * 100}%`;
-    p.style.bottom = `${Math.random() * 50}px`;
-    p.style.animationDuration = `${8 + Math.random() * 5}s`;
-    p.style.animationDelay = `${Math.random() * 5}s`;
-    particlesContainer.appendChild(p);
-  }
+    // === Scroll Reveal Animation ===
+    const revealElements = document.querySelectorAll('.poll-card, .poll-origin, .btn');
+    const revealOnScroll = () => {
+      const triggerBottom = window.innerHeight * 0.85;
+      revealElements.forEach(el => {
+        const boxTop = el.getBoundingClientRect().top;
+        if (boxTop < triggerBottom) {
+          el.classList.add('visible');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll(); // trigger on load
   </script>
 </section>
+
 
 
 
