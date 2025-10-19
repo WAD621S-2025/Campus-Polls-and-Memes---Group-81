@@ -267,19 +267,164 @@
 
 
   <!-- Memes Section -->
-  <section id="memes-section" class="fade-in">
-    <div class="container">
-      <h2>Campus Meme Gallery</h2>
-      <div class="mb-4">
-        <input type="file" id="memeInput" class="form-control" accept="image/*">
-        <img id="memePreview" src="" alt="Meme Preview" class="img-fluid mt-3" style="display:none; border-radius:10px; max-height:250px;">
-      </div>
-      <div class="row" id="meme-gallery"></div>
-      <div class="text-center mt-3">
-        <a href="memes.html" class="btn btn-cta">See All Memes</a>
+  <section id="home-memes" class="fade-in" style="padding: 90px 0;">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="meme-heading">Campus Meme Gallery</h2>
+      <input type="file" id="homeMemeInput" class="form-control w-auto" accept="image/*">
+    </div>
+
+    <!-- Meme Belt -->
+    <div class="meme-belt-wrapper">
+      <div class="meme-belt" id="home-meme-belt">
+        <!-- Sample Memes -->
+        <img src="https://i.imgur.com/yk0m8eN.jpeg" alt="Meme 1" class="meme-item">
+        <img src="https://i.imgur.com/JK9kzZU.jpeg" alt="Meme 2" class="meme-item">
+        <img src="https://i.imgur.com/2Zs1b4B.jpeg" alt="Meme 3" class="meme-item">
+        <img src="https://i.imgur.com/xw1qzQ3.jpeg" alt="Meme 4" class="meme-item">
+        <img src="https://i.imgur.com/zKrIHzj.jpeg" alt="Meme 5" class="meme-item">
+        <img src="https://i.imgur.com/h3xOKMQ.jpeg" alt="Meme 6" class="meme-item">
       </div>
     </div>
-  </section>
+  </div>
+
+  <style>
+    /* SECTION STYLING */
+    #home-memes {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animated glow  */
+    #home-memes::before,
+    #home-memes::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.07), transparent 70%),
+                  radial-gradient(circle at 80% 80%, rgba(255,255,255,0.07), transparent 70%);
+      animation: shimmer 12s infinite alternate ease-in-out;
+      z-index: 0;
+    }
+
+    @keyframes shimmer {
+      from { transform: translateY(0) scale(1); opacity: 0.5; }
+      to { transform: translateY(-30px) scale(1.1); opacity: 1; }
+    }
+
+    .meme-heading {
+      font-size: 2.7rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, var(--accent), #fff, var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 12px rgba(255,255,255,0.25);
+      animation: glowPulse 5s infinite alternate;
+    }
+
+    @keyframes glowPulse {
+      from { text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent); }
+      to { text-shadow: 0 0 25px var(--accent), 0 0 45px var(--secondary); }
+    }
+
+    /* BELT WRAPPER */
+    .meme-belt-wrapper {
+      overflow: hidden;
+      position: relative;
+      border-radius: 25px;
+      padding: 30px 0;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 10px 35px var(--shadow);
+      backdrop-filter: blur(10px);
+      z-index: 1;
+    }
+
+    /* MEME BELT */
+    .meme-belt {
+      display: flex;
+      gap: 25px;
+      animation: scroll-infinite 45s linear infinite;
+      width: max-content;
+      align-items: center;
+    }
+
+    .meme-item {
+      height: 180px;
+      width: 180px;
+      border-radius: 20px;
+      object-fit: cover;
+      flex-shrink: 0;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .meme-item:hover {
+      transform: scale(1.12);
+      box-shadow: 0 8px 35px rgba(0, 0, 0, 0.6);
+    }
+
+    /* INFINITE SCROLL */
+    @keyframes scroll-infinite {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .meme-belt:hover {
+      animation-play-state: paused;
+    }
+
+    /* DARK MODE ADAPTATION */
+    body.dark-mode #home-memes {
+      background: linear-gradient(135deg, var(--bg-dark), var(--primary));
+    }
+
+    body.dark-mode .meme-belt-wrapper {
+      background: rgba(255,255,255,0.05);
+    }
+
+    body.dark-mode .meme-heading {
+      background: linear-gradient(90deg, var(--accent), #ccc, var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+
+  <script>
+    const homeMemeInput = document.getElementById('homeMemeInput');
+    const homeMemeBelt = document.getElementById('home-meme-belt');
+
+    // Clone belt content for smooth infinite loop
+    function cloneBelt() {
+      const clone = homeMemeBelt.cloneNode(true);
+      homeMemeBelt.parentElement.appendChild(clone);
+      clone.classList.add('meme-belt-clone');
+    }
+    cloneBelt();
+
+    // User uploads new meme into the loop
+    homeMemeInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = document.createElement('img');
+        img.src = event.target.result;
+        img.classList.add('meme-item');
+        img.alt = 'User Meme';
+        homeMemeBelt.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+      homeMemeInput.value = '';
+    });
+  </script>
+</section>
+
+
 
   <!-- About Section -->
 <section id="about" class="fade-in">
