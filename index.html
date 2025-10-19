@@ -123,36 +123,18 @@
     </div>
   </section>
 
-  <!-- Polls Section -->
-  <section id="polls-section" class="fade-in">
-    <div class="container">
-      <h2>Campus Polls</h2>
-      <div class="row" id="polls-preview">
-        <!-- Example Poll -->
-        <div class="col-md-4 mb-4 fade-in">
-          <div class="card shadow-sm p-3">
-            <h5>Sample Poll</h5>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="poll1" id="poll1Yes">
-              <label class="form-check-label" for="poll1Yes">Yes</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="poll1" id="poll1No">
-              <label class="form-check-label" for="poll1No">No</label>
-            </div>
-            <button class="btn btn-cta mt-2">Vote</button>
-            <div class="progress mt-3">
-              <div class="progress-bar bg-success" style="width:50%">Yes (0)</div>
-              <div class="progress-bar bg-danger" style="width:50%">No (0)</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="text-center mt-3">
-        <a href="polls.html" class="btn btn-cta">See All Polls</a>
-      </div>
+  <section id="home-polls" class="fade-in">
+  <div class="container">
+    <h2>Campus Polls</h2>
+    <div class="row" id="home-polls-container">
+      <!-- Polls dynamically loaded here -->
     </div>
-  </section>
+    <div class="text-center mt-3">
+      <a href="polls.html" class="btn btn-cta">See All Polls</a>
+      <a href="create_poll.html" class="btn btn-cta ms-2">Create Poll</a>
+    </div>
+  </div>
+</section>
 
   <!-- Memes Section -->
   <section id="memes-section" class="fade-in">

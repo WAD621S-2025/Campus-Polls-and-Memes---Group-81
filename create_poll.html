@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusConnect - Create Poll</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+/* ===== General Body ===== */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #e0eafc, #cfdef3, #c0d6e4);
+  color: #222;
+  transition: all 0.5s ease;
+  padding-top: 100px;
+  min-height: 100vh;
+}
+
+/* ===== Dark Mode ===== */
+body.dark-mode {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #e0e0e0;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+body.dark-mode .navbar {
+  background: rgba(30,30,30,0.7);
+}
+
+/* ===== Main Heading ===== */
+.create-poll-header {
+  text-align: center;
+  padding: 50px 30px;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #ff6a00, #272996, #6a11cb);
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.create-poll-header::after {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  top: -50%;
+  left: -50%;
+  background: rgba(255,255,255,0.1);
+  transform: rotate(45deg);
+  animation: shine 3s infinite linear;
+}
+
+@keyframes shine {
+  0% { transform: rotate(45deg) translateX(-200%); }
+  100% { transform: rotate(45deg) translateX(200%); }
+}
+
+body.dark-mode .create-poll-header {
+  background: linear-gradient(135deg, #3a3a3a, #1f1f1f, #2c2c2c);
+  color: #fff;
+}
+
+/* ===== Links / Navigation ===== */
+.create-poll-links {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.create-poll-links a {
+  display: inline-block;
+  margin: 0 15px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: #751bca;
+  padding: 10px 20px;
+  border-radius: 14px;
+  transition: all 0.4s ease;
+  background: linear-gradient(45deg, rgba(255,106,0,0.2), rgba(238,9,121,0.2));
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.create-poll-links a:hover {
+  background: linear-gradient(135deg, #ff6a00, #2629c0, #6a11cb);
+  color: #fff;
+  transform: translateY(-3px) scale(1.05);
+  text-shadow: 0 0 8px rgba(255,255,255,0.8);
+}
+
+body.dark-mode .create-poll-links a {
+  background: rgba(255,255,255,0.05);
+  color: #81a1ff;
+}
+
+body.dark-mode .create-poll-links a:hover {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255,255,255,0.9);
+}
+
+/* ===== Form ===== */
+form#createPollForm {
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  background: rgba(255,255,255,0.15);
+  padding: 40px 35px;
+  border-radius: 25px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  backdrop-filter: blur(15px);
+  transition: all 0.4s ease;
+}
+
+body.dark-mode form#createPollForm {
+  background: rgba(0,0,0,0.5);
+}
+
+form#createPollForm label {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 15px;
+  display: block;
+}
+
+form#createPollForm input[type="text"] {
+  width: 100%;
+  padding: 16px 20px;
+  margin-top: 8px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.05);
+  color: #222;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+form#createPollForm input[type="text"]:focus {
+  outline: none;
+  border-color: #ff6a00;
+  box-shadow: 0 0 12px rgba(255,106,0,0.6);
+  background: rgba(255,255,255,0.1);
+}
+
+body.dark-mode form#createPollForm input[type="text"] {
+  color: #fff;
+  background: rgba(255,255,255,0.05);
+}
+
+/* ===== Submit Button ===== */
+form#createPollForm button {
+  margin-top: 25px;
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #ff6a00, #164cc2, #6a11cb);
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+form#createPollForm button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 15px 40px rgba(255,106,0,0.5);
+}
+
+/* ===== Feedback Messages ===== */
+#pollMessage {
+  text-align: center;
+  margin-top: 20px;
+  font-weight: 600;
+  display: none;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-size: 1rem;
+  transition: all 0.4s ease;
+}
+
+#pollMessage.success {
+  background: #4caf50;
+  color: #fff;
+}
+
+#pollMessage.error {
+  background: #f44336;
+  color: #fff;
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 25px 0;
+  color: #555;
+}
+
+/* ===== Responsive ===== */
+@media(max-width:768px){
+  .create-poll-header {
+    font-size: 2rem;
+    padding: 35px 20px;
+  }
+
+  form#createPollForm {
+    padding: 30px 20px;
+  }
+
+  .create-poll-links a {
+    margin: 10px;
+    font-size: 1rem;
+  }
+}
+</style>
+
+</style>
+
+
+</head>
+<body>
+
+  <div class="container">
+    <!-- Animated Circles / Background Decorations -->
+    <div class="circle circle1"></div>
+    <div class="circle circle2"></div>
+    <div class="circle circle3"></div>
+
+    <!-- Main Heading with proper class -->
+    <h2 class="create-poll-header">Create a New Poll</h2>
+
+    <!-- Form -->
+    <form id="createPollForm">
+      <label for="question">Poll Question:</label>
+      <input type="text" id="question" name="question" placeholder="Type your poll question..." required>
+
+      <label for="option_yes">Option 1:</label>
+      <input type="text" id="option_yes" name="option_yes" placeholder="Yes or Option 1..." required>
+
+      <label for="option_no">Option 2:</label>
+      <input type="text" id="option_no" name="option_no" placeholder="No or Option 2..." required>
+
+      <button type="submit" class="btn-create mt-3">Create Poll</button>
+    </form>
+
+    <!-- Navigation Links with proper class -->
+    <div class="create-poll-links">
+      <a href="index.html#home-polls">Back to Home Polls</a>
+      <a href="polls.html">See All Polls</a>
+    </div>
+
+    <div id="message" style="text-align:center; margin-top:20px; font-weight:600;"></div>
+  </div>
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const createForm = document.getElementById("createPollForm");
+  const pollMessage = document.getElementById("pollMessage");
+
+  if(createForm){
+    createForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Collect form data
+      const formData = new FormData(createForm);
+
+      // Disable submit button temporarily
+      const submitBtn = createForm.querySelector("button[type='submit']");
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Creating Poll...";
+
+      fetch("php/create_poll.php", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        // Reset button
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Create Poll";
+
+        // Show feedback message
+        pollMessage.style.display = "block";
+        if(data.success){
+          pollMessage.textContent = "✅ Poll created successfully!";
+          pollMessage.className = "success";
+          createForm.reset();
+
+          // Dark mode adjustments
+          if(document.body.classList.contains("dark-mode")){
+            pollMessage.style.background = "#4caf50";
+            pollMessage.style.color = "#fff";
+          }
+
+        } else {
+          pollMessage.textContent = "❌ " + data.error;
+          pollMessage.className = "error";
+
+          if(document.body.classList.contains("dark-mode")){
+            pollMessage.style.background = "#f44336";
+            pollMessage.style.color = "#fff";
+          }
+        }
+
+        // Animate feedback message
+        pollMessage.style.opacity = 0;
+        setTimeout(() => { pollMessage.style.transition = "opacity 0.5s"; pollMessage.style.opacity = 1; }, 50);
+        setTimeout(() => { pollMessage.style.opacity = 0; }, 5000);
+
+      })
+      .catch(err => {
+        console.error(err);
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Create Poll";
+        pollMessage.style.display = "block";
+        pollMessage.textContent = "❌ Failed to create poll. Try again.";
+        pollMessage.className = "error";
+
+        if(document.body.classList.contains("dark-mode")){
+          pollMessage.style.background = "#f44336";
+          pollMessage.style.color = "#fff";
+        }
+
+        // Animate
+        pollMessage.style.opacity = 0;
+        setTimeout(() => { pollMessage.style.transition = "opacity 0.5s"; pollMessage.style.opacity = 1; }, 50);
+        setTimeout(() => { pollMessage.style.opacity = 0; }, 5000);
+      });
+    });
+  }
+
+});
+</script>
+
+
+</body>
+</html>

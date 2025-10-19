@@ -205,5 +205,95 @@ function revealOnScroll() {
 window.addEventListener("scroll", revealOnScroll);
 window.addEventListener("load", revealOnScroll);
 
+// Particle sparkles on vote buttons
+document.querySelectorAll('.vote-btn').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const sparkle = document.createElement('span');
+    sparkle.className = 'sparkle';
+    sparkle.style.left = e.offsetX + 'px';
+    sparkle.style.top = e.offsetY + 'px';
+    btn.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 500);
+  });
+});
+
+// ======= HOME PAGE POLLS FETCH =======
+const homePollsContainer = document.getElementById('home-polls-container');
+
+function loadHomePolls() {
+  fetch('php/fetch_polls.php')
+    .then(res => res.json())
+    .then(data => {
+      homePollsContainer.innerHTML = ''; // Clear existing polls
+
+      data.forEach(poll => {
+        const col = document.createElement('div');
+        col.classList.add('col-md-6', 'mb-4', 'fade-in');
+
+        col.innerHTML = `
+          <div class="card shadow-sm p-3 bg-gradient">
+            <h5 class="poll-question">${poll.question}</h5>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="poll${poll.id}" id="poll${poll.id}Yes">
+              <label class="form-check-label" for="poll${poll.id}Yes">${poll.option_yes}</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="poll${poll.id}" id="poll${poll.id}No">
+              <label class="form-check-label" for="poll${poll.id}No">${poll.option_no}</label>
+            </div>
+            <button class="btn btn-cta mt-2 vote-btn">Vote</button>
+            <div class="progress mt-3">
+              <div class="progress-bar bg-success" style="width:${poll.yes_percent}%">
+                Yes (${poll.yes_votes})
+              </div>
+              <div class="progress-bar bg-danger" style="width:${poll.no_percent}%">
+                No (${poll.no_votes})
+              </div>
+            </div>
+          </div>
+        `;
+        homePollsContainer.appendChild(col);
+
+        // Add voting functionality
+        const voteBtn = col.querySelector(".vote-btn");
+        voteBtn.addEventListener("click", () => {
+          const selected = col.querySelector("input[type='radio']:checked");
+          if (!selected) { alert("Select an option before voting!"); return; }
+
+          const vote = selected.id.includes("Yes") ? "yes" : "no";
+          const poll_id = poll.id;
+
+          fetch('php/save_vote.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `poll_id=${poll_id}&vote=${vote}`
+          })
+          .then(res => res.json())
+          .then(data => {
+            if(!data.error){
+              const total = data.yes_votes + data.no_votes;
+              col.querySelector('.progress-bar.bg-success').style.width = ((data.yes_votes/total)*100).toFixed(1) + "%";
+              col.querySelector('.progress-bar.bg-success').textContent = `Yes (${data.yes_votes})`;
+              col.querySelector('.progress-bar.bg-danger').style.width = ((data.no_votes/total)*100).toFixed(1) + "%";
+              col.querySelector('.progress-bar.bg-danger').textContent = `No (${data.no_votes})`;
+
+              voteBtn.disabled = true;
+              voteBtn.textContent = "Voted ✅";
+              voteBtn.classList.add("btn-success");
+            } else { alert(data.error); }
+          })
+          .catch(() => alert("Failed to submit vote. Try again."));
+        });
+      });
+    })
+    .catch(err => console.log("Failed to fetch home polls:", err));
+}
+
+// Initial load
+if(homePollsContainer) loadHomePolls();
+
+// Optional: refresh every 30 seconds to show new polls automatically
+setInterval(() => { if(homePollsContainer) loadHomePolls(); }, 30000);
+
 
 }); 
