@@ -260,6 +260,51 @@ body.dark-mode section:nth-of-type(odd) {
   color: #fff;
 }
 
+/* === COUNTERS SECTION === */
+#counters {
+  background: var(--bg-light);
+  color: var(--text-dark);
+  padding: 60px 20px;
+  text-align: center;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+#counters h2 {
+  color: var(--text-dark);
+  margin-bottom: 40px;
+}
+
+#counters .counter {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+#counters p {
+  font-size: 1.1rem;
+  color: var(--text-dark);
+}
+
+/* === Dark Mode Fix for Counters === */
+body.dark-mode #counters {
+  background: #1e1e1e;
+  color: var(--text-light);
+}
+
+body.dark-mode #counters h2 {
+  color: #000;
+}
+
+body.dark-mode #counters .counter {
+  color: #4e54c8; 
+  text-shadow: 0 0 8px rgba(143, 148, 251, 0.5);
+}
+
+body.dark-mode #counters p {
+  color: #000;
+}
+
 /* Cards in dark mode */
 body.dark-mode .card {
   background: #222;
