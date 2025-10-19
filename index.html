@@ -756,7 +756,7 @@ document.getElementById("memeUpload").addEventListener("change", (e) => {
 </section>
 
 
-  <!-- Footer -->
+  
   <footer class="fade-in">
     <p>&copy; 2025 CampusConnect | Built by Students</p>
   </footer>
@@ -764,49 +764,47 @@ document.getElementById("memeUpload").addEventListener("change", (e) => {
   <!-- Back to Top Button -->
   <button id="backToTop" title="Back to Top">⬆️</button>
 
-  <!-- Scripts -->
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/main.js"></script>
   <script>
-  // Counter animation on scroll
+  // all counters
   const counters = document.querySelectorAll('.counter');
-  const counterSection = document.querySelector('#about-section'); 
 
-  let countersStarted = false; //  runs only once
-
-  const animateCounters = () => {
-    counters.forEach(counter => {
-      const target = +counter.getAttribute('data-target');
-      const duration = 2000; // total duration in ms
-      const startTime = performance.now();
-
-      const updateCounter = (currentTime) => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        counter.innerText = Math.floor(progress * target);
-        if (progress < 1) {
-          requestAnimationFrame(updateCounter);
-        } else {
-          counter.innerText = target;
-        }
-      };
-      requestAnimationFrame(updateCounter);
-    });
-  };
-
-  const observer = new IntersectionObserver(entries => {
+  // Use IntersectionObserver to trigger animation 
+  const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
-      if(entry.isIntersecting && !countersStarted){
-        animateCounters();
-        countersStarted = true;
+      if(entry.isIntersecting){
+        counters.forEach(counter => {
+          const target = +counter.getAttribute('data-target');
+          const duration = 5000; 
+          const stepTime = 30; 
+          let current = 0;
+          const increment = target / (duration / stepTime);
+
+          const updateCounter = () => {
+            current += increment;
+            if(current < target){
+              counter.innerText = Math.ceil(current);
+              setTimeout(updateCounter, stepTime);
+            } else {
+              counter.innerText = target;
+            }
+          };
+          updateCounter();
+        });
+        obs.unobserve(entry.target); // only run once
       }
     });
   }, { threshold: 0.3 });
 
+  // Observe counters
+  const counterSection = document.querySelector('#about'); 
   if(counterSection){
     observer.observe(counterSection);
   }
 </script>
+
 
 </body>
 </html>
