@@ -123,146 +123,270 @@
     </div>
   </section>
 
-  <section id="home-polls" class="fade-in" style="padding: 80px 0; background: var(--primary); color: var(--text-light);">
-  <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-5">
-      <h2 style="font-size:2.5rem; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight:700;">
-        Campus Polls
-      </h2>
-      <div>
-        <a href="create_poll.html" class="btn btn-create-poll me-2">Create Poll</a>
-        <a href="polls.html" class="btn btn-view-all">See All Polls</a>
+  <section id="home-polls" class="polls-section">
+  <h2 class="section-title">📊 Trending Campus Polls</h2>
+
+  <div class="polls-container">
+    <div class="poll-card" data-question="Should classes start later in the morning?">
+      <h3>Should classes start later in the morning?</h3>
+      <div class="options">
+        <button data-option="Yes">Yes</button>
+        <button data-option="No">No</button>
       </div>
+      <div class="results"></div>
     </div>
 
-    <div class="row" id="home-polls-container">
-      <!-- Sample Poll Cards -->
-      <div class="col-md-4 mb-4">
-        <div class="card poll-card p-3 fade-in">
-          <h5>Do you support more campus events this semester?</h5>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="poll1" id="poll1Yes">
-            <label class="form-check-label" for="poll1Yes">Yes</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="poll1" id="poll1No">
-            <label class="form-check-label" for="poll1No">No</label>
-          </div>
-          <button class="btn btn-vote mt-2">Vote</button>
-          <div class="progress mt-3">
-            <div class="progress-bar bg-success" style="width:65%">Yes (65)</div>
-            <div class="progress-bar bg-danger" style="width:35%">No (35)</div>
-          </div>
-        </div>
+    <div class="poll-card" data-question="Which café serves the best coffee on campus?">
+      <h3>Which café serves the best coffee on campus?</h3>
+      <div class="options">
+        <button data-option="Tech Café">Tech Café</button>
+        <button data-option="NUST Lounge">NUST Lounge</button>
       </div>
+      <div class="results"></div>
+    </div>
 
-      <div class="col-md-4 mb-4">
-        <div class="card poll-card p-3 fade-in">
-          <h5>Should the library stay open 24/7 during exams?</h5>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="poll2" id="poll2Yes">
-            <label class="form-check-label" for="poll2Yes">Yes</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="poll2" id="poll2No">
-            <label class="form-check-label" for="poll2No">No</label>
-          </div>
-          <button class="btn btn-vote mt-2">Vote</button>
-          <div class="progress mt-3">
-            <div class="progress-bar bg-success" style="width:80%">Yes (80)</div>
-            <div class="progress-bar bg-danger" style="width:20%">No (20)</div>
-          </div>
-        </div>
+    <div class="poll-card" data-question="Should we have a student gaming lounge?">
+      <h3>Should we have a student gaming lounge?</h3>
+      <div class="options">
+        <button data-option="Absolutely">Absolutely</button>
+        <button data-option="Not Necessary">Not Necessary</button>
       </div>
+      <div class="results"></div>
+    </div>
 
-      <div class="col-md-4 mb-4">
-        <div class="card poll-card p-3 fade-in">
-          <h5>Would you like online polls for clubs and societies?</h5>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="poll3" id="poll3Yes">
-            <label class="form-check-label" for="poll3Yes">Yes</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="poll3" id="poll3No">
-            <label class="form-check-label" for="poll3No">No</label>
-          </div>
-          <button class="btn btn-vote mt-2">Vote</button>
-          <div class="progress mt-3">
-            <div class="progress-bar bg-success" style="width:55%">Yes (55)</div>
-            <div class="progress-bar bg-danger" style="width:45%">No (45)</div>
-          </div>
-        </div>
+    <div class="poll-card" data-question="Which is tougher — Databases or Web Dev?">
+      <h3>Which is tougher — Databases or Web Dev?</h3>
+      <div class="options">
+        <button data-option="Databases 😭">Databases 😭</button>
+        <button data-option="Web Dev 💻">Web Dev 💻</button>
       </div>
+      <div class="results"></div>
     </div>
   </div>
 
+  <div class="poll-actions">
+    <a href="create_poll.html" class="btn create-poll-btn">➕ Create New Poll</a>
+    <a href="polls.html" class="btn see-all-btn">🔍 See All Polls</a>
+  </div>
+
+  <div class="poll-origin">
+    <h3>The Power of Polls 🧠</h3>
+    <p>
+      Polls bring our campus together — they capture opinions, spark conversations, and give everyone a voice.
+      Whether you’re debating course times or cafeteria food, every vote matters!
+      Have your say or start your own poll to keep the campus buzzing.
+    </p>
+  </div>
+
+  <!-- Floating particles -->
+  <div id="polls-particles"></div>
+
   <style>
-    #home-polls {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-    }
+  /* === ROOT COLORS === */
+  :root {
+    --primary: #4e54c8;
+    --secondary: #8f94fb;
+    --accent: #ff6a3d;
+    --bg-light: #f5f5f5;
+    --bg-dark: #121212;
+    --text-light: #ffffff;
+    --text-dark: #222222;
+    --shadow: rgba(0,0,0,0.15);
+  }
 
-    #home-polls .poll-card {
-      background: rgba(255,255,255,0.05);
-      border-radius: 15px;
-      box-shadow: 0 10px 30px var(--shadow);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    #home-polls .poll-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 40px var(--shadow);
-    }
+  /* === POLLS SECTION === */
+  .polls-section {
+    text-align: center;
+    padding: 100px 20px;
+    position: relative;
+    color: var(--text-light);
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    overflow: hidden;
+  }
 
-    .btn-create-poll, .btn-view-all {
-      padding: 10px 20px;
-      font-weight: 700;
-      border-radius: 12px;
-      border: none;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
+  .section-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 50px;
+    text-shadow: 2px 2px 15px rgba(0,0,0,0.3);
+  }
 
-    .btn-create-poll {
-      background: var(--accent);
-      color: #fff;
-    }
-    .btn-create-poll:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px var(--shadow);
-    }
+  .polls-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 35px;
+    justify-content: center;
+    margin-bottom: 60px;
+  }
 
-    .btn-view-all {
-      background: rgba(255,255,255,0.2);
-      color: #fff;
-    }
-    .btn-view-all:hover {
-      background: rgba(255,255,255,0.35);
-    }
+  .poll-card {
+    background: var(--bg-light);
+    color: var(--text-dark);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
 
-    /* Fade-in */
-    .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
-    .fade-in.show { opacity: 1; transform: translateY(0); }
+  .poll-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  }
 
-    /* Dark Mode Integration */
-    body.dark-mode #home-polls {
-      background: linear-gradient(135deg, var(--bg-dark), var(--primary));
-    }
-    body.dark-mode .btn-view-all { background: rgba(255,255,255,0.15); }
+  .poll-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: var(--primary);
+  }
+
+  .options {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+  }
+
+  .options button {
+    background: var(--accent);
+    border: none;
+    color: var(--text-light);
+    padding: 10px 22px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .options button:hover {
+    background: #ff845a;
+    transform: scale(1.07);
+  }
+
+  .results {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--secondary);
+    margin-top: 8px;
+    display: none;
+  }
+
+  /* === BUTTONS === */
+  .poll-actions {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 70px 0;
+  }
+
+  .btn {
+    text-decoration: none;
+    color: var(--text-light);
+    background: var(--accent);
+    padding: 14px 28px;
+    border-radius: 35px;
+    font-weight: 600;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    transition: 0.3s;
+  }
+
+  .btn:hover {
+    transform: scale(1.08);
+    background: #ff845a;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  }
+
+  /* === ORIGIN BOX === */
+  .poll-origin {
+    background: var(--bg-light);
+    color: var(--text-dark);
+    margin: 50px auto 0 auto;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px var(--shadow);
+    max-width: 900px;
+    text-align: left;
+  }
+
+  .poll-origin h3 {
+    color: var(--primary);
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+
+  .poll-origin p {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  /* === FLOATING PARTICLES === */
+  #polls-particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  .particle {
+    position: absolute;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    animation: floatParticles 10s linear infinite;
+  }
+
+  @keyframes floatParticles {
+    from { transform: translateY(0); opacity: 0.9; }
+    to { transform: translateY(-800px); opacity: 0; }
+  }
+
+  /* Ensure content above particles */
+  .polls-section > *:not(#polls-particles) {
+    position: relative;
+    z-index: 1;
+  }
   </style>
 
   <script>
-    const faders = document.querySelectorAll('#home-polls .fade-in');
-    const appearOptions = { threshold: 0.1 };
-    const appearOnScroll = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add('show');
-          observer.unobserve(entry.target);
-        }
+  // ===== INTERACTIVE POLL LOGIC =====
+  const polls = document.querySelectorAll('.poll-card');
+
+  polls.forEach(poll => {
+    const buttons = poll.querySelectorAll('button');
+    const results = poll.querySelector('.results');
+    let voted = false;
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (voted) return;
+        voted = true;
+        const option = btn.dataset.option;
+        results.style.display = 'block';
+        results.textContent = `You voted for "${option}" ✅`;
+        btn.style.background = '#4e54c8';
+        btn.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+          results.textContent += ' — Thanks for your input!';
+        }, 1000);
       });
-    }, appearOptions);
-    faders.forEach(fader => appearOnScroll.observe(fader));
+    });
+  });
+
+  // ===== PARTICLES GENERATOR =====
+  const particlesContainer = document.getElementById('polls-particles');
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement('div');
+    p.classList.add('particle');
+    const size = Math.random() * 12 + 5;
+    p.style.width = `${size}px`;
+    p.style.height = `${size}px`;
+    p.style.left = `${Math.random() * 100}%`;
+    p.style.bottom = `${Math.random() * 50}px`;
+    p.style.animationDuration = `${8 + Math.random() * 5}s`;
+    p.style.animationDelay = `${Math.random() * 5}s`;
+    particlesContainer.appendChild(p);
+  }
   </script>
 </section>
+
 
 
 
