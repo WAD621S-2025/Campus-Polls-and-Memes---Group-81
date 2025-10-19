@@ -81,8 +81,8 @@
 
     /* Dark mode  */
     body.dark-mode .feature-card-back { 
-  background: #2c2c72; /* or keep #a0b4ff if you like */
-  color: #fff;         /* white text for readability */
+  background: #2c2c72; 
+  color: #fff;         
     }
     
     body.dark-mode .feature-card-back { background: #a0b4ff; }
@@ -123,18 +123,148 @@
     </div>
   </section>
 
-  <section id="home-polls" class="fade-in">
+  <section id="home-polls" class="fade-in" style="padding: 80px 0; background: var(--primary); color: var(--text-light);">
   <div class="container">
-    <h2>Campus Polls</h2>
-    <div class="row" id="home-polls-container">
-      <!-- Polls dynamically loaded here -->
+    <div class="d-flex justify-content-between align-items-center mb-5">
+      <h2 style="font-size:2.5rem; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight:700;">
+        Campus Polls
+      </h2>
+      <div>
+        <a href="create_poll.html" class="btn btn-create-poll me-2">Create Poll</a>
+        <a href="polls.html" class="btn btn-view-all">See All Polls</a>
+      </div>
     </div>
-    <div class="text-center mt-3">
-      <a href="polls.html" class="btn btn-cta">See All Polls</a>
-      <a href="create_poll.html" class="btn btn-cta ms-2">Create Poll</a>
+
+    <div class="row" id="home-polls-container">
+      <!-- Sample Poll Cards -->
+      <div class="col-md-4 mb-4">
+        <div class="card poll-card p-3 fade-in">
+          <h5>Do you support more campus events this semester?</h5>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="poll1" id="poll1Yes">
+            <label class="form-check-label" for="poll1Yes">Yes</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="poll1" id="poll1No">
+            <label class="form-check-label" for="poll1No">No</label>
+          </div>
+          <button class="btn btn-vote mt-2">Vote</button>
+          <div class="progress mt-3">
+            <div class="progress-bar bg-success" style="width:65%">Yes (65)</div>
+            <div class="progress-bar bg-danger" style="width:35%">No (35)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card poll-card p-3 fade-in">
+          <h5>Should the library stay open 24/7 during exams?</h5>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="poll2" id="poll2Yes">
+            <label class="form-check-label" for="poll2Yes">Yes</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="poll2" id="poll2No">
+            <label class="form-check-label" for="poll2No">No</label>
+          </div>
+          <button class="btn btn-vote mt-2">Vote</button>
+          <div class="progress mt-3">
+            <div class="progress-bar bg-success" style="width:80%">Yes (80)</div>
+            <div class="progress-bar bg-danger" style="width:20%">No (20)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card poll-card p-3 fade-in">
+          <h5>Would you like online polls for clubs and societies?</h5>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="poll3" id="poll3Yes">
+            <label class="form-check-label" for="poll3Yes">Yes</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="poll3" id="poll3No">
+            <label class="form-check-label" for="poll3No">No</label>
+          </div>
+          <button class="btn btn-vote mt-2">Vote</button>
+          <div class="progress mt-3">
+            <div class="progress-bar bg-success" style="width:55%">Yes (55)</div>
+            <div class="progress-bar bg-danger" style="width:45%">No (45)</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <style>
+    #home-polls {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+
+    #home-polls .poll-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px var(--shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    #home-polls .poll-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px var(--shadow);
+    }
+
+    .btn-create-poll, .btn-view-all {
+      padding: 10px 20px;
+      font-weight: 700;
+      border-radius: 12px;
+      border: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-create-poll {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-create-poll:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--shadow);
+    }
+
+    .btn-view-all {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+    .btn-view-all:hover {
+      background: rgba(255,255,255,0.35);
+    }
+
+    /* Fade-in */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+    .fade-in.show { opacity: 1; transform: translateY(0); }
+
+    /* Dark Mode Integration */
+    body.dark-mode #home-polls {
+      background: linear-gradient(135deg, var(--bg-dark), var(--primary));
+    }
+    body.dark-mode .btn-view-all { background: rgba(255,255,255,0.15); }
+  </style>
+
+  <script>
+    const faders = document.querySelectorAll('#home-polls .fade-in');
+    const appearOptions = { threshold: 0.1 };
+    const appearOnScroll = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, appearOptions);
+    faders.forEach(fader => appearOnScroll.observe(fader));
+  </script>
 </section>
+
+
 
   <!-- Memes Section -->
   <section id="memes-section" class="fade-in">
