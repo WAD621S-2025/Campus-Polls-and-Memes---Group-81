@@ -1,91 +1,345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CampusConnect - Polls</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CampusConnect - All Polls</title>
+
+<style>
+:root {
+  --primary: #4e54c8;
+  --secondary: #8f94fb;
+  --accent: #ff6a3d;
+  --bg-light: #f5f5f5;
+  --bg-dark: #121212;
+  --text-light: #ffffff;
+  --text-dark: #222222;
+  --shadow: rgba(0,0,0,0.2);
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  transition: background 0.4s, color 0.4s;
+  overflow-x: hidden;
+}
+
+body.dark-mode {
+  background: var(--bg-dark);
+  color: var(--text-light);
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 8px var(--shadow);
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.navbar a:hover { color: var(--accent); }
+
+.navbar button {
+  background: var(--accent);
+  border: none;
+  padding: 6px 12px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.3s;
+}
+
+.navbar button:hover { transform: scale(1.1); }
+
+/* Header */
+header {
+  text-align: center;
+  padding: 80px 20px 40px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+header h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  animation: fadeInUp 1.5s ease forwards;
+}
+
+header p {
+  font-size: 1.2rem;
+  opacity: 0.85;
+  animation: fadeInUp 2s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+/* Polls Container */
+.polls-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+  padding: 50px 30px;
+  max-width: 1400px;
+  margin: auto;
+}
+
+.poll-card {
+  background: #fff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 20px var(--shadow);
+  position: relative;
+  overflow: hidden;
+  transform: translateY(50px);
+  opacity: 0;
+  transition: transform 0.6s ease, opacity 0.6s ease, box-shadow 0.3s;
+}
+
+body.dark-mode .poll-card { background: #1e1e2f; }
+
+.poll-card h3 {
+  margin-top: 0;
+  color: var(--primary);
+  font-size: 1.3rem;
+}
+
+body.dark-mode .poll-card h3 { color: var(--secondary); }
+
+.options {
+  margin-top: 15px;
+}
+
+.options label {
+  display: block;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.vote-btn {
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.vote-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.progress {
+  display: flex;
+  height: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 15px;
+  background: #eee;
+}
+
+.progress-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: 600;
+  width: 0%;
+  transition: width 1s ease;
+}
+
+.bg-success { background: #4caf50; }
+.bg-danger { background: #f44336; }
+
+.create-poll {
+  display: block;
+  width: max-content;
+  margin: 0 auto 50px auto;
+  padding: 12px 25px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.create-poll:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px var(--accent);
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: #fff;
+  margin-top: 50px;
+}
+
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  top: 0;
+  left: 0;
+}
+</style>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">CampusConnect</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html#hero">Home</a></li>
-          <li class="nav-item"><a class="nav-link active" href="polls.html">Polls</a></li>
-          <li class="nav-item"><a class="nav-link" href="memes.html">Memes</a></li>
-        </ul>
-        <button id="darkModeToggle" class="btn btn-outline-light ms-3">🌙 Dark Mode</button>
-      </div>
+<div class="navbar">
+  <div class="logo"><a href="index.html">CampusConnect</a></div>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="memes.html">Memes</a>
+    <button id="darkModeToggle">🌙 Dark Mode</button>
+  </div>
+</div>
+
+<header>
+  <div id="particles-js"></div>
+  <h1>Trending Campus Polls</h1>
+  <p>Vote on the latest student opinions and see live results instantly!</p>
+</header>
+
+<button class="create-poll" onclick="location.href='create_poll.html'">Create New Poll</button>
+
+<div class="polls-container" id="polls-container"></div>
+
+<footer>
+  &copy; 2025 CampusConnect | Built by Students
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+
+const darkModeBtn = document.getElementById('darkModeToggle');
+darkModeBtn.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+  darkModeBtn.textContent = document.body.classList.contains('dark-mode') ? '🌞 Light Mode' : '🌙 Dark Mode';
+});
+
+// Particles
+particlesJS("particles-js", {
+  particles: { number: { value: 80 }, size: { value: 3 },
+    color: { value: "#ffffff" },
+    line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.3, width: 1 },
+    move: { speed: 2 } },
+  interactivity: { events: { onhover: { enable: true, mode: "repulse" } } }
+});
+
+// Sample polls
+const samplePolls = [
+  { id: 1, question: "Should campus extend library hours?", option_yes: "Yes", option_no: "No", yes_votes: 120, no_votes: 80 },
+  { id: 2, question: "Do you support a campus shuttle service?", option_yes: "Yes", option_no: "No", yes_votes: 200, no_votes: 50 },
+  { id: 3, question: "Should there be more student events?", option_yes: "Absolutely", option_no: "Not necessary", yes_votes: 150, no_votes: 30 },
+  { id: 4, question: "Do you prefer online lectures?", option_yes: "Yes", option_no: "No", yes_votes: 90, no_votes: 110 },
+  { id: 5, question: "Should food options be healthier?", option_yes: "Yes", option_no: "No", yes_votes: 180, no_votes: 40 },
+  { id: 6, question: "Do you want more study spaces?", option_yes: "Yes", option_no: "No", yes_votes: 210, no_votes: 20 }
+];
+
+
+const pollsContainer = document.getElementById('polls-container');
+
+function createPollCard(poll) {
+  const totalVotes = poll.yes_votes + poll.no_votes;
+  const yesPercent = ((poll.yes_votes / totalVotes) * 100).toFixed(1);
+  const noPercent = ((poll.no_votes / totalVotes) * 100).toFixed(1);
+
+  const card = document.createElement('div');
+  card.classList.add('poll-card');
+
+  card.innerHTML = `
+    <h3>${poll.question}</h3>
+    <div class="options">
+      <label><input type="radio" name="poll${poll.id}"> ${poll.option_yes}</label>
+      <label><input type="radio" name="poll${poll.id}"> ${poll.option_no}</label>
+      <button class="vote-btn">Vote</button>
     </div>
-  </nav>
-
-  <!-- Polls Section -->
-  <section id="polls-section" class="fade-in mt-5 pt-5">
-    <div class="container">
-      <h2 class="mb-4">Campus Polls</h2>
-      <div class="row" id="polls-container">
-        <!-- Polls loaded dynamically -->
-      </div>
+    <div class="progress">
+      <div class="progress-bar bg-success">Yes (${poll.yes_votes})</div>
+      <div class="progress-bar bg-danger">No (${poll.no_votes})</div>
     </div>
-  </section>
+  `;
+  pollsContainer.appendChild(card);
 
-  <!-- Back to Top Button -->
-  <button id="backToTop" title="Back to Top">⬆️</button>
-
-  <!-- Footer -->
-  <footer class="fade-in mt-5">
-    <p>&copy; 2025 CampusConnect | Built by Students</p>
-  </footer>
-
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/main.js"></script>
-  <script>
-    // Fetch polls dynamically from backend
-    const pollsContainer = document.getElementById('polls-container');
-
-    fetch('php/fetch_polls.php')
-      .then(res => res.json())
-      .then(data => {
-        data.forEach(poll => {
-          const col = document.createElement('div');
-          col.classList.add('col-md-4', 'mb-4', 'fade-in');
-          col.setAttribute('data-poll-id', poll.id);
-
-          col.innerHTML = `
-            <div class="card shadow-sm p-3">
-              <h5>${poll.question}</h5>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="poll${poll.id}" id="poll${poll.id}Yes">
-                <label class="form-check-label" for="poll${poll.id}Yes">${poll.option_yes}</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="poll${poll.id}" id="poll${poll.id}No">
-                <label class="form-check-label" for="poll${poll.id}No">${poll.option_no}</label>
-              </div>
-              <button class="btn btn-primary mt-2">Vote</button>
-              <div class="progress mt-3">
-                <div class="progress-bar bg-success" style="width:${poll.yes_percent}%">
-                  Yes (${poll.yes_votes})
-                </div>
-                <div class="progress-bar bg-danger" style="width:${poll.no_percent}%">
-                  No (${poll.no_votes})
-                </div>
-              </div>
-            </div>
-          `;
-          pollsContainer.appendChild(col);
+  // Animate card on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.style.transform = 'translateY(0)';
+        entry.target.style.opacity = '1';
+        entry.target.querySelectorAll('.progress-bar').forEach((bar, i) => {
+          bar.style.width = i === 0 ? `${yesPercent}%` : `${noPercent}%`;
         });
-      })
-      .catch(err => console.log("Failed to fetch polls:", err));
-  </script>
+      }
+    });
+  }, { threshold: 0.1 });
+
+  observer.observe(card);
+
+  // Vote button interaction
+  const voteBtn = card.querySelector('.vote-btn');
+  voteBtn.addEventListener('click', () => {
+    const selected = card.querySelector('input[type="radio"]:checked');
+    if(!selected){ alert("Select an option before voting!"); return; }
+
+    const chosenText = selected.parentElement.textContent.trim();
+    let currentValue = parseInt(selected.id.includes("yes") ? poll.yes_votes : poll.no_votes);
+    let targetValue = currentValue + 1;
+
+    const counterAnimation = (bar) => {
+      let value = currentValue;
+      const step = () => {
+        if(value < targetValue){
+          value++;
+          bar.textContent = `${bar.classList.contains('bg-success') ? 'Yes' : 'No'} (${value})`;
+          requestAnimationFrame(step);
+        }
+      }
+      step();
+    }
+
+    counterAnimation(card.querySelector('.bg-success'));
+    counterAnimation(card.querySelector('.bg-danger'));
+    voteBtn.disabled = true;
+    voteBtn.textContent = "Voted ✅";
+    voteBtn.style.background = "#4caf50";
+  });
+}
+
+samplePolls.forEach(createPollCard);
+</script>
 </body>
 </html>
